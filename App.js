@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Platform, Image, Text, View, ScrollView } from 'react-native';
-
+import { StyleSheet, Platform, Image, Text, View, ScrollView, Button, Alert } from 'react-native';
 import firebase from 'react-native-firebase';
 
 export default class App extends React.Component {
@@ -15,6 +14,11 @@ export default class App extends React.Component {
     // console.warn('User -> ', user.toJSON());
 
     // await firebase.analytics().logEvent('foo', { bar: '123'});
+  }
+
+  _onPressButton() {
+    firebase.analytics().logEvent('onPressButton', { target: 'Alert' });
+    Alert.alert('You Clicked the Button.')
   }
 
   render() {
@@ -45,7 +49,7 @@ export default class App extends React.Component {
             {firebase.analytics.nativeModuleExists && <Text style={styles.module}>analytics()</Text>}
             {firebase.auth.nativeModuleExists && <Text style={styles.module}>auth()</Text>}
             {firebase.config.nativeModuleExists && <Text style={styles.module}>config()</Text>}
-            {firebase.crashlytics.nativeModuleExists && <Text style={styles.module}>crashlytics()</Text>}
+            {firebase.crashlytics.nativeModuleExists && <Text style={styles.module}>crashlytics()</Text>}   
             {firebase.database.nativeModuleExists && <Text style={styles.module}>database()</Text>}
             {firebase.firestore.nativeModuleExists && <Text style={styles.module}>firestore()</Text>}
             {firebase.functions.nativeModuleExists && <Text style={styles.module}>functions()</Text>}
@@ -56,7 +60,14 @@ export default class App extends React.Component {
             {firebase.notifications.nativeModuleExists && <Text style={styles.module}>notifications()</Text>}
             {firebase.perf.nativeModuleExists && <Text style={styles.module}>perf()</Text>}
             {firebase.storage.nativeModuleExists && <Text style={styles.module}>storage()</Text>}
-          </View>
+          <Button
+            onPress={this._onPressButton}
+            title="Click"
+            color="#841584"
+            accessibilityLabel="Invoke anaytics"
+            size="15"
+            ></Button> 
+          </View> 
         </View>
       </ScrollView>
     );
